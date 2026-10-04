@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1026">
+<title>Untuk Riska</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#f3c97a;--cream:#fbf3e2;--serif:'Instrument Serif',Georgia,serif;--sans:'Jost',system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#0b1026;color:var(--cream);font:300 1rem/1.6 var(--sans);overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+::selection{background:var(--gold);color:#1a1020}
+.fx{position:fixed;pointer-events:none}
+#sky,#cv{inset:0;width:100%;height:100%}
+#orb{left:62%;top:0;width:84px;height:84px;border-radius:50%;background:var(--o,#e8ecff)}
+#orb::after{content:"";position:absolute;inset:-45%;border-radius:50%;background:var(--o,#e8ecff);filter:blur(32px);opacity:.4}
+#mt{left:50%;bottom:0;width:max(100%,1100px);height:min(58vh,440px);transform:translateX(-50%)}
+.mist{left:-30%;width:160%;height:28vh;bottom:6vh;background:radial-gradient(ellipse at center,rgba(255,255,255,.2),transparent 68%);filter:blur(26px);animation:dr 42s ease-in-out infinite alternate}
+.mist.b{bottom:20vh;opacity:.7;animation-duration:58s;animation-direction:alternate-reverse}
+@keyframes dr{to{transform:translateX(14%)}}
+@keyframes up{from{opacity:0;transform:translateY(22px)}}
+@keyframes ri{from{opacity:0;filter:blur(10px);transform:translateY(46px) rotate(5deg)}}
+@keyframes bl{50%{opacity:0}}
+@keyframes cu{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+#hud{position:fixed;z-index:5;top:calc(14px + env(safe-area-inset-top,0px));right:14px;display:flex;gap:12px;align-items:center;padding:8px 16px;border-radius:99px;background:rgba(9,13,34,.5);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.14);font-size:.78rem}
+#hud b{color:var(--gold);font-weight:400}
+#bar{position:fixed;z-index:5;right:0;top:0;width:3px;height:0;background:linear-gradient(var(--gold),#ffb3c1)}
+
+section{position:relative;z-index:3;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:14vh 22px}
+.note{font:italic 1.2rem var(--serif);color:var(--gold);margin-bottom:1rem;animation:up 1.4s both}
+h1{font:400 clamp(4.5rem,24vw,11rem)/.9 var(--serif);text-shadow:0 6px 40px rgba(0,0,0,.35)}
+h1 span{display:block;font:italic 400 .26em/1.4 var(--serif);animation:up 1.4s .2s both}
+h1 em{display:block;font-style:normal}
+h1 i{display:inline-block;padding:0 .02em;font-style:normal;background:linear-gradient(180deg,#fff6df,#f3c97a 62%,#e79a8b);-webkit-background-clip:text;background-clip:text;color:transparent;animation:ri 1.5s cubic-bezier(.2,.7,.2,1) calc(.6s + var(--i)*.13s) both}
+.sub{font:italic 400 clamp(1.3rem,4.8vw,1.8rem)/1.4 var(--serif);margin-top:1.4rem;animation:up 1.6s 1.8s both}
+.tw{margin-top:.9rem;min-height:1.7em;color:var(--gold);font-size:.95rem;letter-spacing:.04em;animation:up 1.4s 2.4s both}
+#tw::after{content:"|";margin-left:2px;animation:bl 1s steps(1) infinite}
+.cue{position:absolute;bottom:max(4vh,env(safe-area-inset-bottom));color:inherit;text-decoration:none;font:italic 1.05rem var(--serif);opacity:.8}
+.cue::after{content:"";display:block;width:1px;height:46px;margin:10px auto 0;background:linear-gradient(var(--gold),transparent);animation:cu 2.2s ease-in-out infinite}
+
+.gl{width:100%;max-width:640px;padding:clamp(28px,6vw,52px) clamp(22px,5vw,46px);border-radius:28px;background:linear-gradient(160deg,rgba(48,58,120,.8),rgba(18,22,56,.86));-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.28);box-shadow:0 30px 80px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.18)}
+.gl p{font:italic 400 clamp(1.45rem,5.6vw,2.1rem)/1.45 var(--serif)}
+.gl p+p{margin-top:.5rem}
+.gl p.g{color:var(--gold);margin-top:1rem}
+.rv{opacity:0;transform:translateY(14px);transition:opacity 1.6s,transform 1.6s;transition-delay:var(--d,0s)}
+.rv.on{opacity:1;transform:none}
+h2{font:400 clamp(2.6rem,10vw,4.4rem)/1.05 var(--serif);margin-bottom:.5rem}
+.hint{font-size:.9rem;opacity:.8;margin-bottom:1.8rem}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;width:100%;max-width:1000px}
+.card{perspective:1000px;height:270px;cursor:pointer;outline-offset:4px}
+.in{position:relative;height:100%;transition:transform 1s cubic-bezier(.2,.7,.2,1);transform-style:preserve-3d}
+.card:not(.f):hover .in{transform:rotateY(-12deg)}
+.card.f .in{transform:rotateY(180deg)}
+.fa,.fb{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;border-radius:20px;border:1px solid rgba(255,255,255,.3);background:linear-gradient(160deg,rgba(58,70,136,.94),rgba(26,32,76,.96));box-shadow:0 18px 50px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.2);backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.fb{transform:rotateY(180deg);background:linear-gradient(160deg,rgba(132,76,124,.95),rgba(48,36,94,.96))}
+.fa h3{font:400 2.8rem/1.1 var(--serif);margin-bottom:.6rem}
+.fa span{font-size:.85rem;color:var(--gold)}
+.fb p{font:italic 400 1.25rem/1.4 var(--serif)}
+
+.btn{font:400 1rem var(--sans);color:#1a1020;background:linear-gradient(120deg,#fff3d6,#f3c97a 55%,#ffb3c1);border:0;border-radius:99px;padding:16px 36px;cursor:pointer;box-shadow:0 10px 40px rgba(243,201,122,.35);transition:transform .3s}
+.btn:hover{transform:translateY(-3px) scale(1.03)}
+#box{animation:up 1.2s both}
+#ttd{margin-top:1.4rem;color:var(--gold);opacity:0;transition:opacity 2.4s}
+#ttd.on{opacity:1}
+footer{position:relative;z-index:3;text-align:center;padding:0 22px max(40px,env(safe-area-inset-bottom));font-size:.85rem;opacity:.8}
+footer button{margin-top:10px;background:none;border:0;color:inherit;font:inherit;cursor:pointer;text-decoration:underline;text-underline-offset:6px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div id="sky" class="fx"></div>
+<div id="orb" class="fx"></div>
+<canvas id="cv" class="fx"></canvas>
+<svg id="mt" class="fx" viewBox="0 0 1200 400" preserveAspectRatio="none"></svg>
+<div class="mist fx"></div><div class="mist b fx"></div>
+<div id="hud"><span id="pos">basecamp</span><b id="alt">0 mdpl</b></div><div id="bar"></div>
+
+<section id="hero">
+  <p class="note">catatan dari kaki gunung</p>
+  <h1><span>untuk</span><em id="nm">Riska</em></h1>
+  <p class="sub">Riska Amelia, pemburu fajar dan sahabat kabut pagi.</p>
+  <p class="tw">✦ <span id="tw"></span></p>
+  <a class="cue" href="#s1">mulai mendaki</a>
+</section>
+
+<section id="s1">
+  <div class="gl">
+    <p class="rv">Gunung tidak pernah meminta untuk didaki.</p>
+    <p class="rv" style="--d:.3s">Ia hanya berdiri, tenang dan sabar,</p>
+    <p class="rv" style="--d:.6s">dan hati yang tepat akan datang dengan sendirinya.</p>
+    <p class="rv" style="--d:.9s">Begitulah caraku memandangmu, Riska:</p>
+    <p class="rv" style="--d:1.2s">bukan untuk ditaklukkan,</p>
+    <p class="rv g" style="--d:1.5s">hanya untuk dikagumi, sambil belajar melangkah lebih baik.</p>
+  </div>
+</section>
+
+<section id="s2">
+  <h2>Enam kepingan kata</h2>
+  <p class="hint">Sentuh tiap kartu, buka pelan-pelan.</p>
+  <div class="grid">
+    <div class="card" tabindex="0" role="button"><div class="in"><div class="fa"><h3>Fajar</h3><span>sentuh untuk membuka ✦</span></div><div class="fb"><p>Fajar datang perlahan,
+membawa cahaya di sela kabut pagi.
+Namun entah mengapa,
+indahnya terasa sederhana
+jika dibandingkan dengan caramu hadir—
+tenang, hangat,
+dan membuat pagi seolah memiliki alasan untuk bersinar.</p></div></div></div>
+    <div class="card" tabindex="0" role="button"><div class="in"><div class="fa"><h3>Kabut</h3><span>sentuh untuk membuka ✦</span></div><div class="fb"><p>Kabut turun perlahan,
+menyembunyikan wajah gunung dari pagi.
+Namun di antara putih yang samar itu,
+ada satu hal yang tetap jelas—
+bahwa kehadiranmu
+selalu punya cara sendiri
+untuk membuat dunia terasa lebih indah.</p></div></div></div>
+    <div class="card" tabindex="0" role="button"><div class="in"><div class="fa"><h3>Edelweis</h3><span>sentuh untuk membuka ✦</span></div><div class="fb"><p>Di antara dinginnya puncak
+dan sunyi yang dipeluk kabut,
+edelweis tetap mekar tanpa meminta untuk dikagumi.
+
+Begitu pula dirimu—
+indah tanpa perlu berusaha menjadi indah,
+cukup hadir,
+dan dunia terasa sedikit lebih hangat.</p></div></div></div>
+    <div class="card" tabindex="0" role="button"><div class="in"><div class="fa"><h3>Jejak</h3><span>sentuh untuk membuka ✦</span></div><div class="fb"><p>Di antara kabut dan sunyi lereng,
+ada jejak yang tak sekadar menuju puncak.
+Ia tertinggal perlahan,
+seperti hadirmu—
+diam, namun membuat perjalanan terasa lebih indah.</p></div></div></div>
+    <div class="card" tabindex="0" role="button"><div class="in"><div class="fa"><h3>Hujan</h3><span>sentuh untuk membuka ✦</span></div><div class="fb"><p>Katanya, hujan membuat gunung semakin dingin.
+Tapi mungkin itu hanya karena mereka belum tahu—
+ada senyummu yang bisa membuat lereng paling sunyi
+terasa seperti tempat paling hangat untuk pulang.</p></div></div></div>
+    <div class="card" tabindex="0" role="button"><div class="in"><div class="fa"><h3>Pulang</h3><span>sentuh untuk membuka ✦</span></div><div class="fb"><p>Aku memang turun dari gunung setelah sampai puncak,
+tapi ada satu hal yang tak ingin kutinggalkan—
+yaitu tentangmu.
+
+Sebab ternyata,
+puncak bukan bagian paling indah dari pendakian.
+Melainkan dirimu.</p></div></div></div>
+  </div>
+</section>
+
+<section id="s3">
+  <h2>Sampai di puncak</h2>
+  <p class="hint">Ada satu pesan terakhir, kusimpan sejak kaki gunung.</p>
+  <button class="btn" id="open">Buka pesan terakhir</button>
+  <div class="gl" id="box" hidden>
+    <p id="surat"></p>
+    <!-- Ubah tulisan pengirim di bawah ini sesukamu -->
+    <p id="ttd">dibuat dengan sepenuh hati
+    komenki bede e..bagaimana menurut nu..bagusji atau tidak..sessaku belajar coding untuk bikinki.haha</p>
+  </div>
+</section>
+
+<footer>Untuk Riska Amelia, dengan sepenuh hati.<br><button onclick="scrollTo({top:0,behavior:'smooth'})">turun ke kaki gunung</button></footer>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],R=Math.random,
+lerp=(a,b,t)=>a+(b-a)*t,cl=(v,a=0,b=1)=>Math.min(b,Math.max(a,v));
+
+/* Nama di judul (huruf muncul satu per satu) */
+$('#nm').innerHTML=[...$('#nm').textContent].map((c,i)=>`<i style="--i:${i}">${c}</i>`).join('');
+
+/* Kalimat yang diketik bergantian: ubah sesukamu */
+const LN=['untuk langkahmu yang tenang','untuk tawamu yang selapang savana','untuk pagi yang selalu kau kejar'];
+let li=0,ci=0,dl=0;
+(function ty(){const s=LN[li];ci+=dl?-1:1;$('#tw').textContent=s.slice(0,ci);let d=dl?35:75;
+ if(!dl&&ci==s.length){dl=1;d=1900}else if(dl&&!ci){dl=0;li=(li+1)%LN.length;d=500}setTimeout(ty,d)})();
+
+/* Pegunungan procedural (4 lapis) */
+const mt=$('#mt');
+mt.innerHTML=[[.5,'#1c2547',140,215,.0042,1],[.7,'#141e3b',140,255,.0058,4],[.88,'#0d172b',130,300,.0079,7],[1,'#07121b',95,355,.0108,2]]
+.map(([o,c,a,b,f,s])=>{let d='M0 400';for(let x=0;x<=1200;x+=12){const m=(1-Math.abs(Math.sin(x*f+s)))*.65+(1-Math.abs(Math.sin(x*f*2.7+s*2)))*.35;d+=`L${x} ${(b-a*m).toFixed(1)}`}
+return `<path d="${d}L1200 400Z" fill="${c}" opacity="${o}"/>`}).join('');
+const paths=[...mt.children];
+
+/* Langit berubah seiring scroll: malam, fajar, pagi, senja */
+const S=[[[7,11,31],[27,37,80]],[[44,45,103],[226,120,100]],[[31,77,92],[134,176,150]],[[62,42,92],[236,170,96]]],
+sky=$('#sky'),orb=$('#orb'),bar=$('#bar'),alt=$('#alt'),pos=$('#pos'),nm=['basecamp','kaki gunung','hutan kabut','puncak'];
+let P=0,tk=0;
+function upd(){tk=0;const d=document.documentElement;P=cl(scrollY/Math.max(1,d.scrollHeight-innerHeight));
+ const f=P*(S.length-1),i=Math.min(f|0,S.length-2),t=f-i,m=(a,b)=>'rgb('+a.map((v,k)=>Math.round(lerp(v,b[k],t)))+')';
+ sky.style.background=`linear-gradient(${m(S[i][0],S[i+1][0])},${m(S[i][1],S[i+1][1])})`;
+ orb.style.setProperty('--o','rgb('+[232,236,255].map((v,k)=>Math.round(lerp(v,[255,208,138][k],cl(P*2.5))))+')');
+ orb.style.transform=`translateY(${14+30*Math.sin(P*Math.PI)}vh)`;
+ paths.forEach((p,k)=>p.style.transform=`translateY(${P*(k+1)*26}px)`);
+ bar.style.height=P*100+'%';alt.textContent=Math.round(P*3676).toLocaleString('id-ID')+' mdpl';pos.textContent=nm[Math.min(3,P*4|0)]}
+addEventListener('scroll',()=>tk||(tk=requestAnimationFrame(upd)),{passive:true});addEventListener('resize',upd);upd();
+
+/* Bintang, kunang-kunang, dan percikan saat disentuh */
+const cv=$('#cv'),cx=cv.getContext('2d');let W,H,D;
+const rs=()=>{D=Math.min(devicePixelRatio||1,2);W=cv.width=innerWidth*D;H=cv.height=innerHeight*D};rs();addEventListener('resize',rs);
+const stars=Array.from({length:90},()=>({x:R(),y:R()*.5,r:R()*1.3+.3,t:R()*6.28})),
+flies=Array.from({length:28},()=>({x:R(),y:R(),r:R()*2+1,s:R()*.0004+.0001,t:R()*6.28}));
+let bits=[],T=0;
+function burst(x,y,n=16){for(let i=0;i<n;i++){const a=R()*6.28,v=R()*3+1;bits.push({x:x*D,y:y*D,vx:Math.cos(a)*v*D,vy:(Math.sin(a)*v-1.5)*D,l:1,c:['#f3c97a','#fff3d6','#ffb3c1'][i%3],r:(R()*2+1.5)*D})}}
+addEventListener('pointerdown',e=>burst(e.clientX,e.clientY));
+addEventListener('pointermove',e=>{if(e.pointerType=='mouse'&&R()<.25)burst(e.clientX,e.clientY,1)});
+(function loop(){T++;cx.clearRect(0,0,W,H);
+ for(const s of stars){const a=cl(1-P*2.4)*(.5+.5*Math.sin(T*.03+s.t));if(a<.02)continue;cx.fillStyle=`rgba(255,250,235,${a})`;cx.beginPath();cx.arc(s.x*W,s.y*H,s.r*D,0,6.28);cx.fill()}
+ for(const f of flies){f.y-=f.s;f.x+=Math.sin(T*.01+f.t)*.0003;if(f.y<-.05){f.y=1.05;f.x=R()}
+  const a=(.25+.75*P)*(.5+.5*Math.sin(T*.04+f.t)),X=f.x*W,Y=f.y*H,g=cx.createRadialGradient(X,Y,0,X,Y,f.r*D*5);
+  g.addColorStop(0,`rgba(255,226,140,${a})`);g.addColorStop(1,'rgba(255,226,140,0)');cx.fillStyle=g;cx.beginPath();cx.arc(X,Y,f.r*D*5,0,6.28);cx.fill()}
+ bits=bits.filter(b=>b.l>0);
+ for(const b of bits){b.x+=b.vx;b.y+=b.vy;b.vy+=.05*D;b.vx*=.985;b.l-=.012;cx.globalAlpha=Math.max(b.l,0);cx.fillStyle=b.c;cx.beginPath();cx.ellipse(b.x,b.y,b.r*1.6,b.r*.8,b.x*.05,0,6.28);cx.fill()}
+ cx.globalAlpha=1;requestAnimationFrame(loop)})();
+
+/* Baris puisi muncul saat terlihat */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target)}}),{threshold:.3});
+$$('.rv').forEach(e=>io.observe(e));
+
+/* Kartu putar */
+$$('.card').forEach(c=>{c.onclick=()=>c.classList.toggle('f');c.onkeydown=e=>{if(e.key=='Enter'||e.key==' '){e.preventDefault();c.click()}}});
+
+/* Pesan terakhir: ubah isi pesan di sini */
+const MSG='Riska, aku tidak sedang meminta apa-apa. Aku hanya ingin kau tahu bahwa ada seseorang yang diam-diam tersenyum setiap kali kau bercerita tentang segalanya. Teruslah melangkah, teruslah mengejar fajar. Dan bila suatu hari kau ingin ditemani berjalan, aku akan belajar menjadi teman yang sabar di jalur yang terjal.';
+$('#open').onclick=function(){this.hidden=true;$('#box').hidden=false;$('#box').scrollIntoView({behavior:'smooth',block:'center'});
+ const el=$('#surat');let i=0;
+ (function w(){el.innerHTML=MSG.slice(0,i)+'<span style="opacity:0">'+MSG.slice(i)+'</span>';if(i++<MSG.length)setTimeout(w,34);else $('#ttd').classList.add('on')})();
+ for(let k=0;k<6;k++)setTimeout(()=>burst(R()*innerWidth,innerHeight*(.2+R()*.5),26),k*400)};
+</script>
+</body>
+</html>
